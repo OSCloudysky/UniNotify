@@ -5,7 +5,12 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('slackToken')
     const message = core.getInput('message')
-    await service.sendSlackMessage(token, message)
+    const messageType = core.getInput('messageType')
+    if (messageType === 'slack') {
+      await service.sendSlackMessage(token, message)
+    } else if (messageType === 'discord') {
+      core.debug('Sending discord message')
+    }
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message)
