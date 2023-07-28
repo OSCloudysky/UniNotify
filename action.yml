@@ -5,9 +5,9 @@ inputs:
   slackToken:
     description: 'Slack API token'
     required: false
-  messageType:
-    description: 'Type of message to send (slack, teams, chime)'
-    required: true
+  # messageType:
+  #   description: 'Type of message to send (slack, teams, chime)'
+  #   required: true
   message:
     description: 'Message to send'
     required: true

@@ -3,7 +3,7 @@ import * as service from './services'
 
 async function run(): Promise<void> {
   try {
-    const token = core.getInput('token')
+    const token = core.getInput('slackToken')
     const message = core.getInput('message')
     await service.sendSlackMessage(token, message)
   } catch (error) {
