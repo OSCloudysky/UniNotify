@@ -46,7 +46,13 @@ function run() {
         try {
             const token = core.getInput('slackToken');
             const message = core.getInput('message');
-            yield service.sendSlackMessage(token, message);
+            const messageType = core.getInput('messageType');
+            if (messageType === 'slack') {
+                yield service.sendSlackMessage(token, message);
+            }
+            else if (messageType === 'discord') {
+                core.debug('Sending discord message');
+            }
         }
         catch (error) {
             if (error instanceof Error) {
