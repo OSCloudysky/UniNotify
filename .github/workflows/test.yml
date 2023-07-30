@@ -5,13 +5,12 @@ on: # rebuild any PRs and main branch changes
     branches:
       - main
       - 'releases/*'
-      - 'slack-integration/*'
       
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-    - name: Send Notification
+    - name: Send Notification to slack
       uses: SandeepKumarYaramchitti/UniNotify@v1
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
