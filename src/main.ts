@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as service from './services'
 import {Octokit} from '@octokit/rest'
+import fetch from 'node-fetch'
 
 async function run(): Promise<void> {
   const messageType = core.getInput('messageType')
@@ -9,7 +10,7 @@ async function run(): Promise<void> {
 
   // Get more details information of the job
   const context = github.context
-  const octokit = new Octokit({auth: `token ${githubToken}`})
+  const octokit = new Octokit({auth: `token ${githubToken}`, request: {fetch}})
 
   const commit = await octokit.repos.getCommit({
     owner: context.repo.owner,
