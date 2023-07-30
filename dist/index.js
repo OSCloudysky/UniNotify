@@ -75,7 +75,7 @@ function run() {
             }
             else if (messageType === 'discord') {
                 const webhookUrl = core.getInput('discordWebhookUrl');
-                yield service.sendDiscordMessage(webhookUrl, message);
+                yield service.sendDiscordMessage(webhookUrl, context, commit);
             }
             else if (messageType === 'chime') {
                 const webhookUrl = core.getInput('chimeWebhookUrl');
@@ -160,13 +160,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendDiscordMessage = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(8757));
-function sendDiscordMessage(webhookUrl, message) {
+function sendDiscordMessage(webhookUrl, context, commit) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = webhookUrl;
-        const data = {
-            content: message
+        const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+        const embed = {
+            embeds: [
+                {
+                    title: 'Workflow Execution Details',
+                    fields: [
+                        {
+                            name: 'Workflow Name',
+                            value: context.workflow,
+                            inline: true
+                        },
+                        {
+                            name: 'Event',
+                            value: context.eventName,
+                            inline: true
+                        },
+                        {
+                            name: 'Run URL',
+                            value: `[Link to run](${runUrl})`,
+                            inline: true
+                        },
+                        {
+                            name: 'Triggered By',
+                            value: context.actor,
+                            inline: true
+                        },
+                        {
+                            name: 'Commit URL',
+                            value: `[Link to commit](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha})`,
+                            inline: true
+                        },
+                        {
+                            name: 'Commit Message',
+                            value: commit.data.commit.message,
+                            inline: true
+                        }
+                    ]
+                }
+            ]
         };
-        const response = yield axios_1.default.post(url, data);
+        const response = yield axios_1.default.post(url, embed);
         if (response.status < 200 || response.status >= 300) {
             throw new Error(`Discord webhook failed with status ${response.status}`);
         }

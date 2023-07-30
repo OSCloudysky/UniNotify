@@ -35,7 +35,7 @@ async function run(): Promise<void> {
       await service.sendSlackMessage(token, context, commit)
     } else if (messageType === 'discord') {
       const webhookUrl = core.getInput('discordWebhookUrl')
-      await service.sendDiscordMessage(webhookUrl, message)
+      await service.sendDiscordMessage(webhookUrl, context, commit)
     } else if (messageType === 'chime') {
       const webhookUrl = core.getInput('chimeWebhookUrl')
       await service.sendChimeMessage(webhookUrl, message)
