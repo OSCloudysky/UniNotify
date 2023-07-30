@@ -2,6 +2,9 @@ name: 'Uninotify'
 description: 'Send notification to all messaging platforms'
 author: 'Sandeep Yaramchitti'
 inputs:
+  githubToken:
+    description: 'Github API token'
+    required: true
   slackToken:
     description: 'Slack API token'
     required: false
