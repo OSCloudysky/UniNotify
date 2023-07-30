@@ -68,13 +68,6 @@ export async function sendSlackMessage(
         }
       },
       {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `*Commit Message:* ${commit.data.commit.message}`
-        }
-      },
-      {
         type: 'divider' // divider at the top
       }
     ]
