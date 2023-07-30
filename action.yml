@@ -13,7 +13,7 @@ inputs:
     required: true
   message:
     description: 'Message to send'
-    required: true
+    required: false
   discordWebhookUrl:
     description: 'Webhook URL for discord'
     required: false
