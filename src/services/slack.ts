@@ -30,6 +30,9 @@ export async function sendSlackMessage(
     text: 'GitHub Actions Workflow Execution Details',
     blocks: [
       {
+        type: 'divider' // divider at the top
+      },
+      {
         type: 'section',
         text: {
           type: 'mrkdwn',
@@ -70,6 +73,9 @@ export async function sendSlackMessage(
           type: 'mrkdwn',
           text: `*Commit Message:* ${commit.data.commit.message}`
         }
+      },
+      {
+        type: 'divider' // divider at the top
       }
     ]
   }
