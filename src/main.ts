@@ -18,15 +18,15 @@ async function run(): Promise<void> {
     ref: context.sha
   })
 
+  const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+
   const message = `
-    Workflow: ${context.workflow} 
-    Job: ${context.job}
+    Workflow Name: ${context.workflow} 
     Status: ${context.payload.action}
     Commit Message: ${commit.data.commit.message}
     Commit URL: https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}
     Event: ${context.eventName}
-    Runner: ${context.runId}
-    Ref: ${context.ref}
+    Run URL: ${runUrl}
   `
 
   try {
