@@ -9,7 +9,7 @@ export async function sendDiscordMessage(
     content: message
   }
   const response = await axios.post(url, data)
-  if (response.status !== 200) {
+  if (response.status < 200 || response.status >= 300) {
     throw new Error(`Discord webhook failed with status ${response.status}`)
   }
 }

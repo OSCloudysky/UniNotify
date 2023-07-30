@@ -100,7 +100,7 @@ function sendDiscordMessage(webhookUrl, message) {
             content: message
         };
         const response = yield axios_1.default.post(url, data);
-        if (response.status !== 200) {
+        if (response.status < 200 || response.status >= 300) {
             throw new Error(`Discord webhook failed with status ${response.status}`);
         }
     });
