@@ -1,12 +1,83 @@
 import {WebClient} from '@slack/web-api'
+type Context = {
+  workflow: string
+  eventName: string
+  runId: number
+  actor: string
+  sha: string
+  repo: {
+    owner: string
+    repo: string
+  }
+}
+
+type Commit = {
+  data: {
+    commit: {
+      message: string
+    }
+  }
+}
 
 export async function sendSlackMessage(
   token: string,
-  message: string
+  context: Context,
+  commit: Commit
 ): Promise<void> {
+  // Styling the message
+  const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+  const message = {
+    text: 'GitHub Actions Workflow Execution Details',
+    blocks: [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Workflow Name:* ${context.workflow}`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Event:* ${context.eventName}`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Run URL:* <${runUrl}>`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Triggered By:* ${context.actor}`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Commit URL:* <https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}>`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Commit Message:* ${commit.data.commit.message}`
+        }
+      }
+    ]
+  }
+
   const web = new WebClient(token)
   await web.chat.postMessage({
     channel: '#general',
-    text: message
+    text: message.text,
+    blocks: message.blocks
   })
 }

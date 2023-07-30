@@ -71,7 +71,7 @@ function run() {
         try {
             const token = core.getInput('slackToken');
             if (messageType === 'slack') {
-                yield service.sendSlackMessage(token, message);
+                yield service.sendSlackMessage(token, context, commit);
             }
             else if (messageType === 'discord') {
                 const webhookUrl = core.getInput('discordWebhookUrl');
@@ -222,12 +222,62 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendSlackMessage = void 0;
 const web_api_1 = __nccwpck_require__(431);
-function sendSlackMessage(token, message) {
+function sendSlackMessage(token, context, commit) {
     return __awaiter(this, void 0, void 0, function* () {
+        // Styling the message
+        const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+        const message = {
+            text: 'GitHub Actions Workflow Execution Details',
+            blocks: [
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Workflow Name:* ${context.workflow}`
+                    }
+                },
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Event:* ${context.eventName}`
+                    }
+                },
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Run URL:* <${runUrl}>`
+                    }
+                },
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Triggered By:* ${context.actor}`
+                    }
+                },
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Commit URL:* <https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}>`
+                    }
+                },
+                {
+                    type: 'section',
+                    text: {
+                        type: 'mrkdwn',
+                        text: `*Commit Message:* ${commit.data.commit.message}`
+                    }
+                }
+            ]
+        };
         const web = new web_api_1.WebClient(token);
         yield web.chat.postMessage({
             channel: '#general',
-            text: message
+            text: message.text,
+            blocks: message.blocks
         });
     });
 }

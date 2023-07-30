@@ -32,7 +32,7 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('slackToken')
     if (messageType === 'slack') {
-      await service.sendSlackMessage(token, message)
+      await service.sendSlackMessage(token, context, commit)
     } else if (messageType === 'discord') {
       const webhookUrl = core.getInput('discordWebhookUrl')
       await service.sendDiscordMessage(webhookUrl, message)
