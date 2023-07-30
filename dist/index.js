@@ -79,11 +79,11 @@ function run() {
             }
             else if (messageType === 'chime') {
                 const webhookUrl = core.getInput('chimeWebhookUrl');
-                yield service.sendChimeMessage(webhookUrl, message);
+                yield service.sendChimeMessage(webhookUrl, context, commit);
             }
             else if (messageType === 'teams') {
                 const webhookUrl = core.getInput('teamsWebhookUrl');
-                yield service.sendChimeMessage(webhookUrl, message);
+                yield service.sendTeamsMessage(webhookUrl, message);
             }
             else {
                 core.setFailed('Unsupported messageType. Supported types are "slack" and "discord"');
@@ -124,8 +124,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendChimeMessage = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(8757));
-function sendChimeMessage(webhookUrl, message) {
+function sendChimeMessage(webhookUrl, context, commit) {
     return __awaiter(this, void 0, void 0, function* () {
+        const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+        const message = `
+  Workflow Name: ${context.workflow}
+  Event: ${context.eventName}
+  Run URL: ${runUrl}
+  Triggered By: ${context.actor}
+  Commit URL: https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}
+  Commit Message: ${commit.data.commit.message}
+`;
         const data = {
             Content: message
         };

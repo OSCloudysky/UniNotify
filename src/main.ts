@@ -38,10 +38,10 @@ async function run(): Promise<void> {
       await service.sendDiscordMessage(webhookUrl, context, commit)
     } else if (messageType === 'chime') {
       const webhookUrl = core.getInput('chimeWebhookUrl')
-      await service.sendChimeMessage(webhookUrl, message)
+      await service.sendChimeMessage(webhookUrl, context, commit)
     } else if (messageType === 'teams') {
       const webhookUrl = core.getInput('teamsWebhookUrl')
-      await service.sendChimeMessage(webhookUrl, message)
+      await service.sendTeamsMessage(webhookUrl, message)
     } else {
       core.setFailed(
         'Unsupported messageType. Supported types are "slack" and "discord"'

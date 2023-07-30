@@ -16,7 +16,6 @@ jobs:
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'slack' 
-        message: 'A new release has been published!'
         slackToken: ${{ secrets.SLACK_API_TOKEN }}
 
     - name: Send notification to Discord
@@ -26,7 +25,6 @@ jobs:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'discord'
         discordWebhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        message: 'Tests completed'
 
     - name: Send notification to Chime
       uses: SandeepKumarYaramchitti/UniNotify@v1
@@ -35,9 +33,8 @@ jobs:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'chime'
         chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
-        message: 'Tests completed'
 
-    # - name: Send notification to Teams
+    # - name: Send notification to Teams WIP
     #   uses: SandeepKumarYaramchitti/UniNotify@v1
     #   if: always()
     #   with:
