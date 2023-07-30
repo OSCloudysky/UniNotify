@@ -11,6 +11,9 @@ async function run(): Promise<void> {
     } else if (messageType === 'discord') {
       const webhookUrl = core.getInput('discordWebhookUrl')
       await service.sendDiscordMessage(webhookUrl, message)
+    } else if (messageType === 'chime') {
+      const webhookUrl = core.getInput('chimeWebhookUrl')
+      await service.sendChimeMessage(webhookUrl, message)
     } else {
       core.setFailed(
         'Unsupported messageType. Supported types are "slack" and "discord"'
