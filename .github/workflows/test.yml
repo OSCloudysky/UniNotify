@@ -25,3 +25,11 @@ jobs:
         messageType: 'discord'
         discordWebhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
         message: 'Tests completed'
+
+    - name: Send notification to Chime
+      uses: SandeepKumarYaramchitti/UniNotify@v1
+      if: always()
+      with:
+        messageType: 'chime'
+        chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
+        message: 'Tests completed'
