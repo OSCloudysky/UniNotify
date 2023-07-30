@@ -61,12 +61,12 @@ function run() {
         });
         const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
         const message = `
-    Workflow Name: ${context.workflow} 
-    Status: ${context.payload.action}
-    Commit Message: ${commit.data.commit.message}
-    Commit URL: https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}
+    Workflow Name: ${context.workflow}
     Event: ${context.eventName}
     Run URL: ${runUrl}
+    Triggered By: ${context.actor}
+    Commit URL: https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}
+    Commit Message: ${commit.data.commit.message}
   `;
         try {
             const token = core.getInput('slackToken');
