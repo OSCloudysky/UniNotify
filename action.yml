@@ -11,6 +11,10 @@ inputs:
   message:
     description: 'Message to send'
     required: true
+  discordWebhookUrl:
+    description: 'Webhook URL for discord'
+    required: false
+
 runs:
   using: 'node16'
   main: 'dist/index.js'

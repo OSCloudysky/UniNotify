@@ -2,14 +2,19 @@ import * as core from '@actions/core'
 import * as service from './services'
 
 async function run(): Promise<void> {
+  const message = core.getInput('message')
+  const messageType = core.getInput('messageType')
   try {
     const token = core.getInput('slackToken')
-    const message = core.getInput('message')
-    const messageType = core.getInput('messageType')
     if (messageType === 'slack') {
       await service.sendSlackMessage(token, message)
     } else if (messageType === 'discord') {
-      core.debug('Sending discord message')
+      const webhookUrl = core.getInput('discordWebhookUrl')
+      await service.sendDiscordMessage(webhookUrl, message)
+    } else {
+      core.setFailed(
+        'Unsupported messageType. Supported types are "slack" and "discord"'
+      )
     }
   } catch (error) {
     if (error instanceof Error) {
