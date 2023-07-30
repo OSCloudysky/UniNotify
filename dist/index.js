@@ -58,6 +58,10 @@ function run() {
                 const webhookUrl = core.getInput('chimeWebhookUrl');
                 yield service.sendChimeMessage(webhookUrl, message);
             }
+            else if (messageType === 'teams') {
+                const webhookUrl = core.getInput('teamsWebhookUrl');
+                yield service.sendChimeMessage(webhookUrl, message);
+            }
             else {
                 core.setFailed('Unsupported messageType. Supported types are "slack" and "discord"');
             }
@@ -173,6 +177,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 __exportStar(__nccwpck_require__(4038), exports);
 __exportStar(__nccwpck_require__(1045), exports);
 __exportStar(__nccwpck_require__(5229), exports);
+__exportStar(__nccwpck_require__(302), exports);
 
 
 /***/ }),
@@ -204,6 +209,42 @@ function sendSlackMessage(token, message) {
     });
 }
 exports.sendSlackMessage = sendSlackMessage;
+
+
+/***/ }),
+
+/***/ 302:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sendTeamsMessage = void 0;
+const axios_1 = __importDefault(__nccwpck_require__(8757));
+function sendTeamsMessage(webhookUrl, message) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = {
+            Content: message
+        };
+        const response = yield axios_1.default.post(webhookUrl, data);
+        if (response.status < 200 || response.status >= 300) {
+            throw new Error(`Chime webhook failed with status ${response.status}`);
+        }
+    });
+}
+exports.sendTeamsMessage = sendTeamsMessage;
 
 
 /***/ }),

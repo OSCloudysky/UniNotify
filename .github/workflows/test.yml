@@ -33,3 +33,11 @@ jobs:
         messageType: 'chime'
         chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
         message: 'Tests completed'
+
+    # - name: Send notification to Teams
+    #   uses: SandeepKumarYaramchitti/UniNotify@v1
+    #   if: always()
+    #   with:
+    #     messageType: 'teams'
+    #     chimeWebhookUrl: ${{ secrets.Teams_WEBHOOK_URL }}
+    #     message: 'Tests completed'

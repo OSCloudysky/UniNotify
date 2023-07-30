@@ -17,6 +17,9 @@ inputs:
   chimeWebhookUrl:
     description: 'Webhook URL for chime'
     required: false
+  teamsWebhookUrl:
+    description: 'Webhook URL for teams'
+    required: false
 
 runs:
   using: 'node16'
