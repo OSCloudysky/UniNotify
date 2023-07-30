@@ -14,6 +14,7 @@ jobs:
     - name: Send Notification
       uses: SandeepKumarYaramchitti/UniNotify@v1
       with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'slack' 
         message: 'A new release has been published!'
         slackToken: ${{ secrets.SLACK_API_TOKEN }}
@@ -22,6 +23,7 @@ jobs:
       uses: SandeepKumarYaramchitti/UniNotify@v1
       if: always()
       with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'discord'
         discordWebhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
         message: 'Tests completed'
@@ -30,6 +32,7 @@ jobs:
       uses: SandeepKumarYaramchitti/UniNotify@v1
       if: always()
       with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'chime'
         chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
         message: 'Tests completed'

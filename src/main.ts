@@ -1,9 +1,34 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import * as service from './services'
+import {Octokit} from '@octokit/rest'
+import fetch from 'node-fetch'
 
 async function run(): Promise<void> {
-  const message = core.getInput('message')
   const messageType = core.getInput('messageType')
+  const githubToken = core.getInput('githubToken')
+
+  // Get more details information of the job
+  const context = github.context
+  const octokit = new Octokit({auth: `token ${githubToken}`, request: {fetch}})
+
+  const commit = await octokit.repos.getCommit({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    ref: context.sha
+  })
+
+  const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+
+  const message = `
+    Workflow Name: ${context.workflow} 
+    Status: ${context.payload.action}
+    Commit Message: ${commit.data.commit.message}
+    Commit URL: https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}
+    Event: ${context.eventName}
+    Run URL: ${runUrl}
+  `
+
   try {
     const token = core.getInput('slackToken')
     if (messageType === 'slack') {
