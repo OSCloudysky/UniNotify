@@ -1,10 +1,12 @@
-<p align="center">
+<p>
   <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
 </p>
 
 # UniNotify GitHub Action
 
 This GitHub action allows for easy integration of GitHub actions with various communication platforms such as Slack, Discord, Microsoft Teams, Chime, and AWS SNS for notification purposes.
+
+![UniNotify Github Action](UniNotify.png)
 
 ## Services
 
