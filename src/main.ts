@@ -7,6 +7,7 @@ import fetch from 'node-fetch'
 async function run(): Promise<void> {
   const messageType = core.getInput('messageType')
   const githubToken = core.getInput('githubToken')
+  core.info(`github: ${githubToken}`)
 
   // Get more details information of the job
   const context = github.context
@@ -43,14 +44,15 @@ async function run(): Promise<void> {
       const webhookUrl = core.getInput('teamsWebhookUrl')
       await service.sendTeamsMessage(webhookUrl, message)
     } else if (messageType === 'sns') {
+      core.info('Sending SNS message')
       const snsParams = {
-        awsAccessKeyId: core.getInput('awsAccessKeyId', {required: false}),
-        awsSecretAccessKey: core.getInput('awsSecretAccessKey', {
-          required: false
-        }),
-        awsRegion: core.getInput('awsRegion', {required: false}),
-        snsTopicArn: core.getInput('snsTopicArn', {required: false})
+        awsAccessKeyId: core.getInput('awsAccessKeyId'),
+        awsSecretAccessKey: core.getInput('awsSecretAccessKey'),
+        awsRegion: core.getInput('awsRegion'),
+        snsTopicArn: core.getInput('snsTopicArn')
       }
+
+      core.info(JSON.stringify(snsParams))
 
       if (
         snsParams.awsAccessKeyId &&
