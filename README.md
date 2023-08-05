@@ -6,6 +6,8 @@
 
 This GitHub action allows for easy integration of GitHub actions with various communication platforms such as Slack, Discord, Microsoft Teams, Chime, and AWS SNS for notification purposes.
 
+![UniNotify Github Action](UniNotify.png)
+
 ## Services
 
 Following are the services currently integrated to this action. 
