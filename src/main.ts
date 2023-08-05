@@ -58,7 +58,7 @@ async function run(): Promise<void> {
         snsParams.awsRegion &&
         snsParams.snsTopicArn
       ) {
-        await service.sendSNSMessage(token, context, commit, snsParams)
+        await service.sendSNSMessage(context, commit, snsParams)
       }
     } else {
       core.setFailed(

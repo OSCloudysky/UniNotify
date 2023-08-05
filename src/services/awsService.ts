@@ -29,7 +29,6 @@ interface SNSParams {
 }
 
 export async function sendSNSMessage(
-  token: string,
   context: Context,
   commit: Commit,
   params: SNSParams
