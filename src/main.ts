@@ -44,12 +44,12 @@ async function run(): Promise<void> {
       await service.sendTeamsMessage(webhookUrl, message)
     } else if (messageType === 'sns') {
       const snsParams = {
-        awsAccessKeyId: core.getInput('aws-access-key-id', {required: false}),
-        awsSecretAccessKey: core.getInput('aws-secret-access-key', {
+        awsAccessKeyId: core.getInput('awsAccessKeyId', {required: false}),
+        awsSecretAccessKey: core.getInput('awsSecretAccessKey', {
           required: false
         }),
-        awsRegion: core.getInput('aws-region', {required: false}),
-        snsTopicArn: core.getInput('sns-topic-arn', {required: false})
+        awsRegion: core.getInput('awsRegion', {required: false}),
+        snsTopicArn: core.getInput('snsTopicArn', {required: false})
       }
 
       if (

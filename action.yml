@@ -32,7 +32,7 @@ inputs:
   awsRegion:
     description: 'AWS Region'
     required: false
-  awsSnsTopicArn:
+  snsTopicArn:
     description: 'AWS SNS Topic ARN'
     required: false
 runs:
