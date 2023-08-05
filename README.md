@@ -10,7 +10,75 @@ This GitHub action allows for easy integration of GitHub actions with various co
 
 Following are the services currently integrated to this action. 
 
+### Slack
 
+This service allows you to send custom messages to a specified Slack channel whenever a GitHub action is triggered.
+
+**Required parameters**:
+```yml
+githubToken: ${{ secrets.GITHUB_TOKEN }}
+messageType: 'slack' 
+slackToken: ${{ secrets.SLACK_API_TOKEN }}
+```
+
+### Discord
+The Discord service enables you to send custom messages to a specified Discord channel when a GitHub action runs.
+
+**Required parameters**:
+```yml
+githubToken: ${{ secrets.GITHUB_TOKEN }}
+messageType: 'discord'
+discordWebhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+```
+
+### Chime
+The Chime service permits sending custom messages to a specified Chime chat room when a GitHub action occurs.
+
+**Required parameters**:
+```yml
+githubToken: ${{ secrets.GITHUB_TOKEN }}
+messageType: 'chime'
+chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
+```
+
+### AWS SNS
+The AWS SNS service provides the ability to publish custom messages to an SNS topic when a GitHub action gets triggered. These messages can be received through any endpoint subscribed to the topic, such as email or SMS.
+
+**Required parameters**:
+```yml
+messageType: 'sns'
+githubToken: ${{ secrets.GITHUB_TOKEN }}
+awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+awsSecretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+snsTopicArn: ${{ secrets.AWS_SNS_TOPIC_ARN }}
+awsRegion: 'us-east-1'
+```
+
+### Usage
+To use this GitHub action, you need to set the necessary environment variables in your workflow file (*.yml), and then call the action.
+
+An example workflow file would look something like this:
+
+```yml
+name: 'build-test'
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+      
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send Notification to slack
+      uses: SandeepKumarYaramchitti/UniNotify@v1
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+        messageType: 'slack' 
+        slackToken: ${{ secrets.SLACK_API_TOKEN }}
+```
 
 ## Code in Main
 
@@ -37,36 +105,6 @@ $ npm test
 
 ...
 ```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
 
 ## Publish to a distribution branch
 
@@ -98,6 +136,20 @@ with:
 
 See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
 
-## Usage:
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+## Contributing
+Please see CONTRIBUTING and CODE_OF_CONDUCT for details.
+
+In essence, we would love you to contribute to UniNotify, and we want to make it as easy and transparent as possible, whether it's:
+
+- Reporting an issue
+- Discussing the current state of the code
+- Submitting a fix
+- Proposing new features
+
+## Security Vulnerabilities
+  
+If you discover a security vulnerability within this package, please create an issue against this repo. All security vulnerabilities will be promptly addressed.
+
