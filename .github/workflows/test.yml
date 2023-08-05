@@ -33,6 +33,17 @@ jobs:
         messageType: 'chime'
         chimeWebhookUrl: ${{ secrets.CHIME_WEBHOOK_URL }}
 
+    - name: Send SNS Message
+      uses: SandeepKumarYaramchitti/UniNotify@v1
+      with:
+        token: ${{ secrets.AWS_SNS_TOKEN }}
+        messageType: 'sns'
+        message: 'Test SNS Message'
+        awsAccessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        awsSecretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        snsTopicArn: ${{ secrets.AWS_SNS_TOPIC_ARN }}
+        awsRegion: 'us-east-1'
+
     # - name: Send notification to Teams WIP
     #   uses: SandeepKumarYaramchitti/UniNotify@v1
     #   if: always()

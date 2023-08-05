@@ -42,6 +42,24 @@ async function run(): Promise<void> {
     } else if (messageType === 'teams') {
       const webhookUrl = core.getInput('teamsWebhookUrl')
       await service.sendTeamsMessage(webhookUrl, message)
+    } else if (messageType === 'sns') {
+      const snsParams = {
+        awsAccessKeyId: core.getInput('aws-access-key-id', {required: false}),
+        awsSecretAccessKey: core.getInput('aws-secret-access-key', {
+          required: false
+        }),
+        awsRegion: core.getInput('aws-region', {required: false}),
+        snsTopicArn: core.getInput('sns-topic-arn', {required: false})
+      }
+
+      if (
+        snsParams.awsAccessKeyId &&
+        snsParams.awsSecretAccessKey &&
+        snsParams.awsRegion &&
+        snsParams.snsTopicArn
+      ) {
+        await service.sendSNSMessage(token, context, commit, snsParams)
+      }
     } else {
       core.setFailed(
         'Unsupported messageType. Supported types are "slack" and "discord"'

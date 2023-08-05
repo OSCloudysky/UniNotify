@@ -23,7 +23,18 @@ inputs:
   teamsWebhookUrl:
     description: 'Webhook URL for teams'
     required: false
-
+  awsAccessKeyId:
+    description: 'AWS Access Key ID'
+    required: false
+  awsSecretAccessKey:
+    description: 'AWS Secret Access Key'
+    required: false
+  awsRegion:
+    description: 'AWS Region'
+    required: false
+  awsSnsTopicArn:
+    description: 'AWS SNS Topic ARN'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
