@@ -42,7 +42,7 @@ export async function sendSNSMessage(
   const snsData = {
     Message: message,
     Subject: 'GitHub Actions Workflow Execution Details',
-    TopicArn: process.env.SNS_TOPIC_ARN
+    TopicArn: params.snsTopicArn
   }
 
   try {

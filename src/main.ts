@@ -7,7 +7,6 @@ import fetch from 'node-fetch'
 async function run(): Promise<void> {
   const messageType = core.getInput('messageType')
   const githubToken = core.getInput('githubToken')
-  core.info(`github: ${githubToken}`)
 
   // Get more details information of the job
   const context = github.context
@@ -51,8 +50,6 @@ async function run(): Promise<void> {
         awsRegion: core.getInput('awsRegion'),
         snsTopicArn: core.getInput('snsTopicArn')
       }
-
-      core.info(JSON.stringify(snsParams))
 
       if (
         snsParams.awsAccessKeyId &&
