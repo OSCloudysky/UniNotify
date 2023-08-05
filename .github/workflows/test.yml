@@ -1,6 +1,6 @@
 name: 'build-test'
 on: # rebuild any PRs and main branch changes
-  pull_request:
+  pull_request_target:
   push:
     branches:
       - main
@@ -9,6 +9,7 @@ on: # rebuild any PRs and main branch changes
 jobs:
   notify:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
     - name: Send Notification to slack
       uses: SandeepKumarYaramchitti/UniNotify@v1
