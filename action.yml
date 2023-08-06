@@ -1,5 +1,8 @@
 name: 'Uninotify'
 description: 'Send notification to all messaging platforms'
+branding:
+  icon: 'bell'  
+  color: 'green'  
 author: 'Sandeep Yaramchitti'
 inputs:
   githubToken:
