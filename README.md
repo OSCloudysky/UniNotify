@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Send Notification to slack
-      uses: SandeepKumarYaramchitti/UniNotify@v1
+      uses: OSCloudysky/UniNotify@v1
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         messageType: 'slack' 
